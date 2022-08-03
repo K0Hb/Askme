@@ -1,0 +1,2 @@
+class AddHiddenToQuestion < ApplicationRecord
+end
