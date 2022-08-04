@@ -22,7 +22,8 @@ class QuestionsController < ApplicationController
   end
 
   def hidden
-    set_question.update_attribute(:hidden, true)
+    @question.update_attribute(:hidden, true)
+
     redirect_to questions_path
   end
 
