@@ -1,30 +1,24 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: %i[update show destroy edit hide]
-  def create
+  before_action :set_question, only: %i[update show destroy edit]
+  def create 
     question = Question.create(question_params)
 
-    redirect_to question_path(question)
+    redirect_to question_path(question), notice: 'Новый вопрос создан!'
   end
 
   def update
     @question.update(question_params)
 
-    redirect_to question_path(@question)
+    redirect_to question_path(@question), notice: 'Сохранили вопрос!'
   end
 
   def destroy
     @question.destroy
 
-    redirect_to questions_path
+    redirect_to questions_path, notice: 'Вопрос удалён!'
   end
 
   def show
-  end
-
-  def hide
-    @question.update_attribute(:hidden, true)
-
-    redirect_to questions_path
   end
 
   def index
@@ -42,7 +36,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:body, :user_id, :hidden)
+    params.require(:question).permit(:body, :user_id)
   end
 
   def set_question
