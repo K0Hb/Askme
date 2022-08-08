@@ -30,7 +30,7 @@ test:
   <<: *default
   database: myapp_test
 
-duction:
+production:
   <<: *default
   database: myapp_production
   username: myapp
