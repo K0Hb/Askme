@@ -1,4 +1,4 @@
-#----------------------------- local(Sqlite)
+#---------------------------- local(Sqlite)
 
 # default: &default
 #   adapter: sqlite3

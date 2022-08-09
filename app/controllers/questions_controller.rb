@@ -1,15 +1,19 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: %i[update show destroy edit]
-  def create 
-    question = Question.create(question_params)
+  def create
+    @question = Question.create(question_params)
 
-    redirect_to question_path(question), notice: 'Новый вопрос создан!'
+    if @question.save
+      redirect_to question_path(question), notice: 'Новый вопрос создан!'
+    else
+      render :new
+    end
   end
 
   def update
     @question.update(question_params)
 
-    redirect_to question_path(@question), notice: 'Сохранили вопрос!'
+    redirect_to questions_path(@question), notice: 'Сохранили вопрос!'
   end
 
   def destroy
