@@ -20,6 +20,7 @@
           <p class="title-sm text-bold"><%= link_to 'Ask me!', root_path %></p>
           <div>
             <% if current_user.present? %>
+              <%= link_to "редактировать пользователя", edit_user_path(current_user.id), class: 'mr-sm' %>
               <%= content_tag 'span', "@#{current_user.nickname}", class: 'mr-sm' %>
               <%= button_to 'Выйти', session_path, method: :delete %>
             <% else %>
