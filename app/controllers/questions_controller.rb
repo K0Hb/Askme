@@ -1,5 +1,4 @@
 class QuestionsController < ApplicationController
-  include ActionView::Helpers::TextHelper
 
   before_action :set_question, only: %i[update show destroy edit]
   def create
