@@ -8,7 +8,7 @@ class User < ApplicationRecord
   before_validation :downcase_nickname
 
   validates :name, presence: true
-  validates :nickname, presence: true, uniqueness: true, length: { maximum: MAX_NICKNAME_LENGTH }, format: { with: VAILD_NICKNAME }
+  validates :nickname, presence: true, length: { maximum: MAX_NICKNAME_LENGTH }, format: { with: VAILD_NICKNAME }
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL }
 
   def downcase_nickname
