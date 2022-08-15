@@ -1,9 +1,16 @@
 <div class="mb-sm">
+  <% if current_user == question.author %>
+    <%= "@#{question.author.nickname}" %>
+  <% else  %>
+    <%= link_to "@#{question.author.nickname}", user_path(question.author) %>
+  <% end %>
+  <p>Впорос:</p>
   <%= question.body %>
 </div>
 
 <% if question.answer.present? %>
   <div class="mb-sm text-dark-red">
+    <p>Ответ:</p>
     <%= question.answer %>
   </div>
 <% end %>
