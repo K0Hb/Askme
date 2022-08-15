@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   belongs_to :user
+  belongs_to :author, class_name: 'User'
 
   MAX_TEXT_LENGTH = 280
 
