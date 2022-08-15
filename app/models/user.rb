@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :questions
+
   MAX_NICKNAME_LENGTH = 40
   VAILD_NICKNAME = /\A\w+\z/
   VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
