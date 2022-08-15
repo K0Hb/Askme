@@ -40,6 +40,14 @@ a, button {
   font-weight: bold;
 }
 
+.text-light-grey {
+  color: #c0c0c0;
+}
+
+.text-center {
+  text-align: center;
+}
+
 .save_white_space {
   white-space: pre-line;
 }
