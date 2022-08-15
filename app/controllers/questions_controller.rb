@@ -3,7 +3,9 @@ class QuestionsController < ApplicationController
   before_action :set_question_for_current_user, only: %i[update destroy edit]
 
   def create
+    author = current_user.id
     question_params = params.require(:question).permit(:body, :user_id)
+    question_params[:author_id] = author
 
     @question = Question.create(question_params)
 
