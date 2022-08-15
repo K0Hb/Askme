@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2022_08_15_123713) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "answer"
-    t.integer "author_id", null: false
+    t.integer "author_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
