@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   def create
     question_params = params.require(:question).permit(:body, :user_id)
 
-    @user = @question.user # костыль для view qustions/new
+    @question = Question.create(question_params)
 
     if @question.save
       redirect_to user_path(@question.user), notice: 'Новый вопрос создан!'
