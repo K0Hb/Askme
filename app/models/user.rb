@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :questions
+  has_many :questions, dependent: :delete_all
 
   MAX_NICKNAME_LENGTH = 40
   VAILD_NICKNAME = /\A\w+\z/
