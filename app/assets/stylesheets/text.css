@@ -31,6 +31,14 @@ a, button {
   color: #d00000;
 }
 
+.text-green {
+  color: #2da512;
+}
+
+.text-blue {
+  color: #0e4aa3;
+}
+
 .text-dark-red {
   color: #9d0208;
 }

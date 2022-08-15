@@ -1,6 +1,6 @@
-<div class="mb-sm">
+<div class="mb-sm text-green">
   <% if current_user == question.author %>
-    <%= "@#{question.author.nickname}" %>
+    <p class="text-blue"><%= "@#{question.author.nickname}" %></p>
   <% else  %>
     <%= link_to "@#{question.author.nickname}", user_path(question.author) %>
   <% end %>
