@@ -19,4 +19,8 @@ class User < ApplicationRecord
   def downcase_nickname
     nickname.downcase!
   end
+
+  def to_param
+    self.nickname
+  end
 end
