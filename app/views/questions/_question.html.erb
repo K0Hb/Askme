@@ -1,11 +1,17 @@
-<div class="mb-sm text-green">
-  <% if current_user.present? && current_user == question.author %>
-    <p class="text-blue"><%= "@#{question.author.nickname}" %></p>
-  <% elsif question.author %>
+
+<p class="mb text-sm text-grey">
+  Вопрос <%= link_to "##{question.id}", question_path(question) %>
+  для юзера <%= link_to "@#{question.user.nickname}", user_path(question.user) %>
+  от юзера
+
+  <% if question.author %>
     <%= link_to "@#{question.author.nickname}", user_path(question.author) %>
   <% else %>
-    <p class="text-grey">@аноним <%= fa_icon('eye') %></p>
+    <%= link_to "@аноним", '#' %><%= fa_icon('eye') %>
   <% end %>
+</p>
+
+<div class="mb-sm text-green">
   <p>Впорос:</p>
   <%= question.body %>
 </div>
