@@ -1,8 +1,8 @@
 
 <p class="mb text-sm text-grey">
   Вопрос <%= link_to "##{question.id}", question_path(question) %>
-  для юзера <%= link_to "@#{question.user.nickname}", user_path(question.user) %>
-  от юзера
+  для  <%= link_to "@#{question.user.nickname}", user_path(question.user) %>
+  от
 
   <% if question.author %>
     <%= link_to "@#{question.author.nickname}", user_path(question.author) %>
