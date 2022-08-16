@@ -13,6 +13,9 @@ class User < ApplicationRecord
   validates :nickname, presence: true, uniqueness: true, length: { maximum: MAX_NICKNAME_LENGTH }, format: { with: VAILD_NICKNAME }
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL }
 
+  include Gravtastic
+  gravtastic(secure: true, filetype: :png, size: 100, default: 'identicon')
+
   def downcase_nickname
     nickname.downcase!
   end
