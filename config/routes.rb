@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   resources :questions
   resource :session, only: %i[new create destroy]
-  resources :users, except: %i[index]
+  resources :users
 end

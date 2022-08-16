@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="users-box">
+    <% @users.each do |user| %>
+      <div class="user-box" style="background-color: transparent">
+        <%= render partial: 'users/user_avatar', locals: {user: user} %>
+        <%= link_to "@#{user.nickname}", user_path(user) %>
+      </div>
+    <% end %>
+  </div>
+</div>

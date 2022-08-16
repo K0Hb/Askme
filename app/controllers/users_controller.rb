@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
-  # before_action :authorize_user, only: %i[edit update destroy]
+  before_action :authorize_user, only: %i[edit update destroy]
 
   def new
     @user = User.new
@@ -43,6 +43,10 @@ class UsersController < ApplicationController
   def show
     @questions = @user.questions.order(created_at: :desc)
     @question = Question.new(user: @user)
+  end
+
+  def index
+    @users = User.all
   end
 
   private
