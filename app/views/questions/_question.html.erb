@@ -1,11 +1,11 @@
 
 <p class="mb text-sm text-grey">
   Вопрос <%= link_to "##{question.id}", question_path(question) %>
-  для  <%= link_to "@#{question.user.nickname}", user_path(question.user) %>
+  для  <%= link_to "@#{question.user.nickname}", user_path(question.user.nickname) %>
   от
 
   <% if question.author %>
-    <%= link_to "@#{question.author.nickname}", user_path(question.author) %>
+    <%= link_to "@#{question.author.nickname}", user_path(question.author.nickname) %>
   <% else %>
     <%= link_to "@аноним", '#' %><%= fa_icon('eye') %>
   <% end %>

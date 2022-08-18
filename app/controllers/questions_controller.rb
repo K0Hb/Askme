@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
     @question = Question.create(question_params)
 
     if @question.save
-      redirect_to user_path(@question.user), notice: 'Новый вопрос создан!'
+      redirect_to user_path(@question.user.nickname), notice: 'Новый вопрос создан!'
     else
       render :new
     end

@@ -23,7 +23,7 @@
           </div>
           <div>
             <% if current_user.present? %>
-              <%= link_to "@#{current_user.nickname}", user_path(current_user), class: 'mr-sm' %>
+              <%= link_to "@#{current_user.nickname}", user_path(current_user.nickname), class: 'mr-sm' %>
               <%= button_to 'Выйти', session_path, method: :delete %>
             <% else %>
               <%= link_to 'Регистрация', new_user_path, class: 'button button-yellow mr-sm' %>
