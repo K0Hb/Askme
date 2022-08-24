@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  REGEX_HASHTAG = /#[\p{L}\d\S]+/
+
   before_action :ensure_current_user, only: %i[update destroy edit]
   before_action :set_question_for_current_user, only: %i[update destroy edit]
 
@@ -53,7 +55,7 @@ class QuestionsController < ApplicationController
   private
 
   def find_hashtags(question)
-    hashtags = (question.body + (question.answer.nil? ? '' : answer)).scan(/#[\p{L}\d\S]+/).map(&:downcase).uniq
+    hashtags = (question.body + (question.answer.nil? ? '' : answer)).scan(REGEX_HASHTAG).map(&:downcase).uniq
     all_hashtags = Hashtag.all.map(&:name)
     hashtags.each do |tag|
       hashtag = Hashtag.find_by_name(tag)
