@@ -1,22 +1,25 @@
 class User < ApplicationRecord
-  has_many :questions, dependent: :delete_all
+  include Gravtastic
 
   MAX_NICKNAME_LENGTH = 40
   VAILD_NICKNAME = /\A\w+\z/
   VALID_EMAIL = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
   has_secure_password
+  has_many :questions, dependent: :delete_all
 
-  before_validation :downcase_nickname
+  before_validation :downcase_nickname_email
 
   validates :name, presence: true
   validates :nickname, presence: true, uniqueness: true, length: { maximum: MAX_NICKNAME_LENGTH }, format: { with: VAILD_NICKNAME }
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL }
 
-  include Gravtastic
   gravtastic(secure: true, filetype: :png, size: 100, default: 'identicon')
 
-  def downcase_nickname
-    nickname.downcase!
+  private
+
+  def downcase_nickname_email
+    nickname&.downcase!
+    email&.downcase!
   end
 end
