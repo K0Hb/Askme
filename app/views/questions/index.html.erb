@@ -8,6 +8,16 @@
       <%= render partial: 'users/user_avatar', locals: {user: user} %>
     <% end %>
   </div>
+
+  <h2 class="title-lg mb">
+    Хэштеги
+  </h2>
+
+  <div class="tag-box">
+    <% @hashtags.each do |hashtag| %>
+      <%= link_to hashtag.name, hashtag_path(hashtag.name) %>
+    <% end %>
+  </div>
 </div>
 
 <div class="container mt-sm">

@@ -1,0 +1,12 @@
+<div class="mt-sm container">
+  <h2 class="title-lg mb">
+    Вопросы с хэштегом <%= @hashtag.name %>
+  </h2>
+
+
+  <% @questions.each do |question| %>
+    <div class="mt-sm container">
+      <%= render question %>
+    </div>
+  <% end %>
+</div>

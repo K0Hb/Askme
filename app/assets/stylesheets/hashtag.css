@@ -1,0 +1,8 @@
+.tag-box {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.tag-box a {
+  padding: 2%;
+}

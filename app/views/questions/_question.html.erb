@@ -27,6 +27,13 @@
   <div class="text-grey">
     <%= l(question.created_at, format: :short) %>
   </div>
+  <div class="text-grey">
+    <div class="tag-box">
+      <% question.hashtags.each do |hashtag| %>
+        <%= link_to hashtag.name, hashtag_path(hashtag.name) %>
+      <% end %>
+    </div>
+  </div>
 
   <% if current_user == question.user %>
     <div>

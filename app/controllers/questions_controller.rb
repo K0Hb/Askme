@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
     @question.author_id = current_user.nil? ? nil : current_user.id
 
     if @question.save
+      find_hashtags(@question)
       redirect_to user_path(@question.user.nickname), notice: 'Новый вопрос создан!'
     else
       render :new
@@ -36,6 +37,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
+    @hashtags = Hashtag.all
     @questions = Question.order(created_at: :asc).last(10)
     @users = User.order(created_at: :asc).last(10)
   end
@@ -49,6 +51,19 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def find_hashtags(question)
+    hashtags = (question.body + (question.answer.nil? ? '' : answer)).scan(/#[\p{L}\d\S]+/).map(&:downcase).uniq
+    all_hashtags = Hashtag.all.map(&:name)
+    hashtags.each do |tag|
+      hashtag = Hashtag.find_by_name(tag)
+      hashtag ||= Hashtag.create(name: tag)
+      question.hashtags << hashtag
+      unless all_hashtags.include?(tag)
+        hashtag.save
+      end
+    end
+  end
 
   def ensure_current_user
     redirect_with_alert unless current_user.present?
