@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
     @question = Question.create(question_params)
 
     @question.author_id = current_user.nil? ? nil : current_user.id
+    # @question.author_id = current_user  <- dont work :(
 
     if @question.save
       find_hashtags(@question)
