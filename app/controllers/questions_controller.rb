@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
     @question.author = current_user
 
     if @question.save
-      find_hashtags(@question)
+      FindHastags.call(@question)
       redirect_to user_path(@question.user.nickname), notice: 'Новый вопрос создан!'
     else
       render :new
@@ -17,9 +17,10 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params)
-
-    redirect_to user_path(@question.user), notice: 'Сохранили вопрос!'
+    if @question.update(question_params)
+      FindHastags.call(@question)
+    end
+    redirect_to user_path(@question.user.nickname), notice: 'Сохранили вопрос!'
   end
 
   def destroy
@@ -39,10 +40,10 @@ class QuestionsController < ApplicationController
     @users = User.order(created_at: :asc).last(10)
   end
 
-  def new
-    @user = User.find(params[:user_id])
-    @question = Question.new
-  end
+  # def new
+  #   @user = User.find(params[:user_id])
+  #   @question = Question.new
+  # end
 
   def edit
   end
@@ -54,19 +55,6 @@ class QuestionsController < ApplicationController
       params.require(:question).permit(:user_id, :body, :answer)
     else
       params.require(:question).permit(:user_id, :body)
-    end
-  end
-
-  def find_hashtags(question)
-    hashtags = (question.body + (question.answer.nil? ? '' : answer)).scan(REGEX_HASHTAG).map(&:downcase).uniq
-    all_hashtags = Hashtag.all.map(&:name)
-    hashtags.each do |tag|
-      hashtag = Hashtag.find_by_name(tag)
-      hashtag ||= Hashtag.create(name: tag)
-      question.hashtags << hashtag
-      unless all_hashtags.include?(tag)
-        hashtag.save
-      end
     end
   end
 
