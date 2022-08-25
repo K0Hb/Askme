@@ -5,11 +5,7 @@ class QuestionsController < ApplicationController
   before_action :set_question_for_current_user, only: %i[update destroy edit]
 
   def create
-    question_params = params.require(:question).permit(:body, :user_id)
-
-    @question = Question.create(question_params)
-
-    # @question.author_id = current_user.nil? ? nil : current_user.id
+    @question = Question.new(question_params)
     @question.author = current_user
 
     if @question.save
@@ -21,8 +17,6 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question_params = params.require(:question).permit(:body, :answer)
-
     @question.update(question_params)
 
     redirect_to user_path(@question.user), notice: 'Сохранили вопрос!'
@@ -54,6 +48,14 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def question_params
+    if current_user.present? && params[:question][:user_id].to_i == current_user.id
+      params.require(:question).permit(:user_id, :body, :answer)
+    else
+      params.require(:question).permit(:user_id, :body)
+    end
+  end
 
   def find_hashtags(question)
     hashtags = (question.body + (question.answer.nil? ? '' : answer)).scan(REGEX_HASHTAG).map(&:downcase).uniq
