@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
     @user = @question.user
     @question.destroy
 
-    redirect_to user_path(@user), notice: 'Вопрос удалён!'
+    redirect_to user_path(@user.nickname), notice: 'Вопрос удалён!'
   end
 
   def show
