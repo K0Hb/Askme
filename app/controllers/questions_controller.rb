@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :ensure_current_user, only: %i[update destroy edit]
   before_action :set_question_for_current_user, only: %i[update destroy edit]
 
+  before_action :authorization_verification_user, except: %i[show index create]
+
   def create
     @question = Question.new(question_params)
     @question.author = current_user
@@ -40,15 +42,14 @@ class QuestionsController < ApplicationController
     @users = User.order(created_at: :asc).last(10)
   end
 
-  # def new
-  #   @user = User.find(params[:user_id])
-  #   @question = Question.new
-  # end
-
   def edit
   end
 
   private
+
+  def authorization_verification_user
+    redirect_to root_url, alert: 'Нет доступа' unless @question.user == current_user
+  end
 
   def question_params
     if current_user.present? && params[:question][:user_id].to_i == current_user.id
