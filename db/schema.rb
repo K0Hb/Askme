@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_24_135723) do
+ActiveRecord::Schema.define(version: 2022_08_30_101417) do
 
   create_table "hashtags", force: :cascade do |t|
     t.string "name"
@@ -19,10 +19,13 @@ ActiveRecord::Schema.define(version: 2022_08_24_135723) do
     t.index ["name"], name: "index_hashtags_on_name", unique: true
   end
 
-  create_table "hashtags_questions", id: false, force: :cascade do |t|
-    t.integer "hashtag_id", null: false
+  create_table "question_hashtags", force: :cascade do |t|
     t.integer "question_id", null: false
-    t.index ["hashtag_id", "question_id"], name: "index_hashtags_questions_on_hashtag_id_and_question_id", unique: true
+    t.integer "hashtag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hashtag_id"], name: "index_question_hashtags_on_hashtag_id"
+    t.index ["question_id"], name: "index_question_hashtags_on_question_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -47,4 +50,6 @@ ActiveRecord::Schema.define(version: 2022_08_24_135723) do
     t.index ["email"], name: "index_users_on_email"
   end
 
+  add_foreign_key "question_hashtags", "hashtags"
+  add_foreign_key "question_hashtags", "questions"
 end

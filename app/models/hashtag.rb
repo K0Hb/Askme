@@ -1,4 +1,5 @@
 class Hashtag < ApplicationRecord
-  has_and_belongs_to_many :questions
+  has_many :question_hashtags
+  has_many :questions, through: :question_hashtags, source: :question
   validates :name, presence: true, uniqueness: true
 end
