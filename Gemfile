@@ -16,6 +16,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', require: false
 gem 'gravtastic'
 gem 'font-awesome-rails'
+gem 'recaptcha', require: 'recaptcha/rails'
+gem 'dotenv-rails'
 
 group :production do
   gem 'pg'
