@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
+    question_params[:user_id] = @question.user_id
     if @question.update(question_params)
       FindHastags.call(@question)
     end
