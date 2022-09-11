@@ -3,8 +3,8 @@ class QuestionsController < ApplicationController
 
   before_action :ensure_current_user, only: %i[update destroy edit]
   before_action :set_question_for_current_user, only: %i[update destroy edit]
-
   before_action :authorization_verification_user, except: %i[show index create]
+  before_action :block_user_id_changes, except: %i[update]
 
   def create
     @question = Question.new(question_params)
@@ -19,7 +19,6 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question_params[:user_id] = @question.user_id
     if @question.update(question_params)
       FindHastags.call(@question)
     end
@@ -47,6 +46,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def block_user_id_changes
+    redirect_to root_url, alert: 'Нельзя менять адресата вопроса' unless params[:question][:user_id] == @question.user_id
+  end
 
   def authorization_verification_user
     redirect_to root_url, alert: 'Нет доступа' unless @question.user == current_user
