@@ -1,10 +1,7 @@
 class QuestionsController < ApplicationController
-  REGEX_HASHTAG = /#[\p{L}\d\S]+/
-
   before_action :ensure_current_user, only: %i[update destroy edit]
   before_action :set_question_for_current_user, only: %i[update destroy edit]
   before_action :authorization_verification_user, except: %i[show index create]
-  before_action :block_user_id_changes, except: %i[update]
 
   def create
     @question = Question.new(question_params)
@@ -47,17 +44,13 @@ class QuestionsController < ApplicationController
 
   private
 
-  def block_user_id_changes
-    redirect_to root_url, alert: 'Нельзя менять адресата вопроса' unless params[:question][:user_id] == @question.user_id
-  end
-
   def authorization_verification_user
     redirect_to root_url, alert: 'Нет доступа' unless @question.user == current_user
   end
 
   def question_params
     if current_user.present? && params[:question][:user_id].to_i == current_user.id
-      params.require(:question).permit(:user_id, :body, :answer)
+      params.require(:question).permit(:body, :answer)
     else
       params.require(:question).permit(:user_id, :body)
     end
@@ -72,10 +65,6 @@ class QuestionsController < ApplicationController
   end
 
   def check_captcha(model)
-    if current_user.present?
-      true
-    else
-      verify_recaptcha(model: model)
-    end
+    current_user.present? || verify_recaptcha(model: model)
   end
 end
