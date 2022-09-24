@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   before_action :authorization_verification_user, except: %i[show index create]
 
   def create
-    @question = Question.new(question_params)
+    @question = Question.new(create_question_params)
     @question.author = current_user
 
     if check_captcha(@question) && @question.save
@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params_from_update)
+    if @question.update(update_question_params)
       FindHastags.call(@question)
     end
     redirect_to user_path(@question.user.nickname), notice: 'Сохранили вопрос!'
@@ -48,11 +48,11 @@ class QuestionsController < ApplicationController
     redirect_to root_url, alert: 'Нет доступа' unless @question.user == current_user
   end
 
-  def question_params
+  def create_question_params
     params.require(:question).permit(:user_id, :body)
   end
 
-  def question_params_from_update
+  def update_question_params
     params.require(:question).permit(:body, :answer)
   end
 
